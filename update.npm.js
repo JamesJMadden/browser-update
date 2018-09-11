@@ -206,7 +206,7 @@ this.sub= function(v,minus) {
 
 window.$bu_getBrowser=$bu_.get_browser;
 
-var $buo = function(op,test) {
+var UpdateBrowser = function(op,test) {
 var n = window.navigator,b;
 op=window._buorgres=op||{};
 var ll = op.l||(n.languages ? n.languages[0] : null) || n.language || n.browserLanguage || n.userLanguage||document.documentElement.getAttribute("lang")||"en";
@@ -308,7 +308,18 @@ e.src = op.jsshowurl||op.domain+"/update.show.min.js";
 document.body.appendChild(e);
 };
 
-module.exports = $buo;
 
-
-
+// Node.js-style export for Node and Component
+if (typeof module != 'undefined') {
+	// left here for backwards compatibility
+	module.exports = UpdateBrowser;
+	module.exports.UpdateBrowser = UpdateBrowser;
+} else if (typeof define === "function" && define.amd) {
+	// AMD/requirejs: Define the module
+	define(function(){
+		return UpdateBrowser;
+	});
+} else {
+	// Browser: Expose to window
+	window.Resumable = Resumable;
+}
